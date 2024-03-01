@@ -1,21 +1,4 @@
-#root {
-  width: 1980px;
-  height: 540px;
-  margin: 0 auto;
-  padding: 5rem;
-  text-align: center;
-  background-color:cadetblue;
-}
-
-.MyPhoto {
-  height: 15em;
-}
-
-.Name {
-  font-family: "Times New Roman", serif;
-  font-size: 30px;
-}
-
-.Group {
-  font-family: "Times New Roman", serif;
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
