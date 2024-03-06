@@ -18,7 +18,7 @@ const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed }) => {
     };
 
     return (
-        <Header  style={{background:"white"}} >
+        <Header  style={{background:"white",padding:0}} >
             <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined  />}
