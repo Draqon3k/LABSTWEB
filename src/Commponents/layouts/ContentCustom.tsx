@@ -45,7 +45,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
     };
 
     return (
-        <Content style={{ margin: "40px 100px", paddingRight: 600, minHeight: 480 }}>
+        <Content style={{ margin: "40px 100px", paddingRight: 600, minHeight:559}}>
             {selectedMenuKey === "1" && (
                 // Content for "Profile"
                 <div>
@@ -62,7 +62,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                         <Card key={index} title="Info about my friend" style={{ margin: "15px", padding: 0 }}>
                             <p>{`Name: ${card.input1}`}</p>
                             <p>{`Tel.nr: ${card.input2}`}</p>
-                            <p>{`Date of brithday: ${card.input3}`}</p>
+                            <p>{`Date of brith: ${card.input3}`}</p>
                         </Card>
                     ))}
                 </div>
@@ -70,7 +70,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
             {selectedMenuKey === "3" && (
                 // Content for "Data"
                 <div>
-                    <h2>Data Content</h2>
+                    <h2>New Card</h2>
                     <Input
                         className="custom-input"
                         name="input1"
@@ -94,7 +94,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                                 setInput3(dateString);
                             }
                         }}
-                        placeholder="Dateofbrithday"
+                        placeholder="Date of brith"
                     />
 
                     <Button type="primary" onClick={handleAddCard}>
