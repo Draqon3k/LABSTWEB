@@ -1,23 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/4.jpg'
-import './App.css'
+import React, { useState } from "react";
+import { Layout } from 'antd';
+import SidebarCustom from "./Commponents/layouts/SidebarCustom";
+import HeaderCustom from "./Commponents/layouts/HeaderCustom";
+import ContentCustom from "./Commponents/layouts/ContentCustom";
 
-function App() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-empty-pattern
-    const [] = useState(0)
+
+const App: React.FC = () => {
+    const [collapsed, setCollapsed] = useState(false);
+    const [selectedMenuKey, setSelectedMenuKey] = useState("1");
 
     return (
-        <>
-            <div>
-                <a>
-                    <img src={reactLogo} className="MyPhoto" alt="React logo"/>
-                </a>
-            </div>
-            <h1 className="Group">CR-221</h1>
-            <p className="Name">Andriuta Dragos
-            </p>
-        </>
-    )
-}
-
-export default App
+        <Layout>
+            <SidebarCustom collapsed={collapsed} onSelectMenu={setSelectedMenuKey} />
+            <Layout>
+                <HeaderCustom setCollapsed={setCollapsed} />
+                <ContentCustom selectedMenuKey={selectedMenuKey} />
+            </Layout>
+        </Layout>
+    );
+};
+export default App;
