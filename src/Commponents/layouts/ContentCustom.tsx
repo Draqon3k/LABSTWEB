@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Card, Input, Button, DatePicker } from "antd";
+import { Layout, Card, Input, Button, DatePicker, Row, Col } from "antd";
 const { Content } = Layout;
 import ProfileContent from "../../ProfileContent.tsx";
 import moment from "moment";
@@ -67,7 +67,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
 
 
     return (
-        <Content style={{ margin: "40px 100px", paddingRight: 600, minHeight:559, maxHeight:650}}>
+        <Content style={{ margin: "40px 100px", paddingRight: 100 , minHeight:559, maxHeight:650}}>
             {selectedMenuKey === "1" && (
                 // Content for "Profile"
                 <div>
@@ -83,18 +83,22 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                 </div>
             )}
             {selectedMenuKey === "2" && (
-                <div >
+                <div>
                     <h2>Cards details</h2>
-                    {cards.map(card => (
-                        <Card key={card.id} title="Info about my friend" style={{ margin: "15px", padding: 0 }}>
-                            <p>{`Name: ${card.input1}`}</p>
-                            <p>{`Tel.nr: ${card.input2}`}</p>
-                            <p>{`Date of birth: ${card.input3}`}</p>
-                            <div style={{ position: "absolute", top: "10px", right: "10px", cursor: "pointer" }} onClick={() => handleDeleteCard(card.id)}>
-                                <DeleteOutlined style={{ fontSize: "20px", color: "red" }} />
-                            </div>
-                        </Card>
-                    ))}
+                    <Row gutter={[16, 16]}>
+                        {cards.map(card => (
+                            <Col key={card.id} xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <Card title="Info about my friend">
+                                    <p>{`Name: ${card.input1}`}</p>
+                                    <p>{`Tel.nr: ${card.input2}`}</p>
+                                    <p>{`Date of birth: ${card.input3}`}</p>
+                                    <div style={{ textAlign: "right" }}>
+                                        <DeleteOutlined onClick={() => handleDeleteCard(card.id)} style={{ color: "red", cursor: "pointer" }} />
+                                    </div>
+                                </Card>
+                            </Col>
+                        ))}
+                    </Row>
                 </div>
             )}
             {selectedMenuKey === "3" && (
