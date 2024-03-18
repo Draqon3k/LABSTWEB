@@ -5,3 +5,13 @@ body {
 
 .custom-input::placeholder{
 }
+
+.ProfileImage {
+  height: 150px;
+  border-radius: 300px;
+}
+
+.InfoProfile {
+  padding-left: 17px;
+
+}
