@@ -6,6 +6,12 @@ body {
 .custom-input::placeholder{
 }
 
+.ProfilContent{
+  display: flex;
+  height: 100%;
+
+}
+
 .ProfileImage {
   height: 150px;
   border-radius: 300px;
@@ -13,5 +19,19 @@ body {
 
 .InfoProfile {
   padding-left: 17px;
+}
 
+.Content {
+  margin: 40px 100px;
+  padding-right: 100px ;
+  height: 100%;
+}
+
+.CardImage{
+  display: flex;
+  padding-left: 100px;
+}
+
+.CardContent{
+  width:500px ;
 }

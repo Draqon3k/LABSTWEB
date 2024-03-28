@@ -11,15 +11,15 @@ const { Panel } = Collapse;
 
 const ProfileContent: React.FC<ProfileContentProps> = ({ data }) => {
     return (
-        <div style={{ display: "flex" }}>
-            <div style={{ flex: 1 }}>
+        <div className={'ProfilContent'}>
+            <div>
                 <h2>Profile Content</h2>
                 <p>
                     <img className={"ProfileImage"} src={imageSrc} alt="Description of the image"/>
                     <p style={{ paddingLeft: 17 }}>{`${data.field1}`}</p>
                 </p>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{ padding:30,flex:1, paddingRight:450 }}>
                 <Collapse defaultActiveKey={['1']} >
                     <Panel header="Info Profile" key="1">
                         <p>{`Age: ${data.field2}`}</p>

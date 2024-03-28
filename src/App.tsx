@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
 
     return (
-        <Layout>
+        <Layout className={'Layout'}>
             <SidebarCustom collapsed={collapsed} onSelectMenu={setSelectedMenuKey} />
             <Layout>
                 <HeaderCustom setCollapsed={setCollapsed}/>

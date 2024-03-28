@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Layout, Card, Input, Button, DatePicker, Row, Col } from "antd";
 const { Content } = Layout;
 import ProfileContent from "../../ProfileContent.tsx";
+import UploadContent from "../../UploadContent.tsx";
 import moment from "moment";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined  } from "@ant-design/icons";
+
 
 interface ContentCustomProps {
     selectedMenuKey: string;
@@ -14,13 +16,16 @@ interface CardData {
     input1: string;
     input2: string;
     input3: string;
+    image: string;
 }
 
 const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
     const [input1, setInput1] = useState<string>("");
     const [input2, setInput2] = useState<string>("");
     const [input3, setInput3] = useState<string>("");
+    const [image, setImage] = useState<string>("");
     const [cards, setCards] = useState<CardData[]>([]);
+
 
     // La încărcarea componentei, încarcă cardurile salvate din localStorage
     useEffect(() => {
@@ -48,6 +53,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
             input1,
             input2,
             input3,
+            image,
         };
         const newCards = [...cards, newCard];
         setCards(newCards);
@@ -57,7 +63,9 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
         setInput1("");
         setInput2("");
         setInput3("");
+        setImage("");
     };
+
 
     const handleDeleteCard = (id: number) => {
         const updatedCards = cards.filter(card => card.id !== id);
@@ -67,7 +75,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
 
 
     return (
-        <Content style={{ margin: "40px 100px", paddingRight: 100 , minHeight:559, maxHeight:650}}>
+        <Content className={'Content'}  style={{height:559,maxHeight:1500}} >
             {selectedMenuKey === "1" && (
                 // Content for "Profile"
                 <div>
@@ -85,15 +93,23 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
             {selectedMenuKey === "2" && (
                 <div>
                     <h2>Cards details</h2>
-                    <Row gutter={[16, 16]}>
+                    <Row gutter={[40, 40]}>
                         {cards.map(card => (
                             <Col key={card.id} xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <Card title="Info about my friend">
-                                    <p>{`Name: ${card.input1}`}</p>
-                                    <p>{`Tel.nr: ${card.input2}`}</p>
-                                    <p>{`Date of birth: ${card.input3}`}</p>
-                                    <div style={{ textAlign: "right" }}>
-                                        <DeleteOutlined onClick={() => handleDeleteCard(card.id)} style={{ color: "red", cursor: "pointer" }} />
+                                <Card className={'CardContent'} title="Info about my friend">
+                                    <Row align="middle">
+                                        <Col xs={16} sm={18} md={18} lg={18} xl={13}>
+                                            <p>{`Name: ${card.input1}`}</p>
+                                            <p>{`Tel.nr: ${card.input2}`}</p>
+                                            <p>{`Date of birth: ${card.input3}`}</p>
+                                        </Col>
+                                        <Col xs={8} sm={6} md={6} lg={6} xl={6} className={'CardImage'}>
+                                            <UploadContent onImageUploaded={handleAddCard} />
+                                        </Col>
+                                    </Row>
+                                    <div style={{textAlign: "right"}}>
+                                        <DeleteOutlined onClick={() => handleDeleteCard(card.id)}
+                                                        style={{color: "darkgray", cursor: "pointer"}}/>
                                     </div>
                                 </Card>
                             </Col>
@@ -104,6 +120,8 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
             {selectedMenuKey === "3" && (
                 // Content for "Data"
                 <div>
+                    <Row>
+                    <Col style={{paddingRight:150}} span={12}>
                     <h2>New Card</h2>
                     <Input
                         className="custom-input"
@@ -134,6 +152,8 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                     <Button type="primary" onClick={handleAddCard}>
                         Add Card
                     </Button>
+                    </Col>
+                    </Row>
                 </div>
             )}
         </Content>
