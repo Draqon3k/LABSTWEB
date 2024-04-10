@@ -14,10 +14,10 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ data }) => {
         <div className={'ProfilContent'}>
             <div>
                 <h2>Profile Content</h2>
-                <p>
+                <div>
                     <img className={"ProfileImage"} src={imageSrc} alt="Description of the image"/>
                     <p style={{ paddingLeft: 17 }}>{`${data.field1}`}</p>
-                </p>
+                </div>
             </div>
             <div style={{ padding:30,flex:1, paddingRight:450 }}>
                 <Collapse defaultActiveKey={['1']} >

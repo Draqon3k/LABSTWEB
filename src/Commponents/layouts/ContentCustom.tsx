@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Layout, Card, Input, Button, DatePicker, Row, Col } from "antd";
+import { Layout, Card, Input, Button, DatePicker, Row, Col, Divider, Space, Modal } from "antd";
 const { Content } = Layout;
 import ProfileContent from "../../ProfileContent.tsx";
 import UploadContent from "../../UploadContent.tsx";
 import moment from "moment";
-import { DeleteOutlined  } from "@ant-design/icons";
-
+import { DeleteOutlined,EditOutlined  } from "@ant-design/icons";
 
 interface ContentCustomProps {
     selectedMenuKey: string;
@@ -16,16 +15,17 @@ interface CardData {
     input1: string;
     input2: string;
     input3: string;
-    image: string;
 }
 
 const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
     const [input1, setInput1] = useState<string>("");
     const [input2, setInput2] = useState<string>("");
     const [input3, setInput3] = useState<string>("");
-    const [image, setImage] = useState<string>("");
-    const [cards, setCards] = useState<CardData[]>([]);
-
+    const [cards, setCards] = useState<CardData[]>([])
+    const [editingCard, setEditingCard] = useState<CardData | null>(null);
+    const [isEditModalVisible, setIsEditModalVisible] = useState<boolean>(false);
+    const [confirmDeleteVisible, setConfirmDeleteVisible] = useState<boolean>(false);
+    const [cardToDelete, setCardToDelete] = useState<CardData | null>(null);
 
     // La încărcarea componentei, încarcă cardurile salvate din localStorage
     useEffect(() => {
@@ -53,7 +53,6 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
             input1,
             input2,
             input3,
-            image,
         };
         const newCards = [...cards, newCard];
         setCards(newCards);
@@ -63,19 +62,54 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
         setInput1("");
         setInput2("");
         setInput3("");
-        setImage("");
     };
 
 
-    const handleDeleteCard = (id: number) => {
-        const updatedCards = cards.filter(card => card.id !== id);
-        setCards(updatedCards);
-        localStorage.setItem("cards", JSON.stringify(updatedCards));
+    const showDeleteConfirm = (card: CardData) => {
+        setCardToDelete(card);
+        setConfirmDeleteVisible(true);
     };
+
+    const handleDeleteCancel = () => {
+        setConfirmDeleteVisible(false);
+        setCardToDelete(null);
+    };
+
+    const handleConfirmDelete = () => {
+        if (cardToDelete) {
+            // Așteaptă 2 secunde înainte de ștergere
+            setTimeout(() => {
+                const updatedCards = cards.filter(card => card.id !== cardToDelete.id);
+                setCards(updatedCards);
+                localStorage.setItem("cards", JSON.stringify(updatedCards));
+            }, 2000);
+
+            setConfirmDeleteVisible(false);
+            setCardToDelete(null);
+        }
+    };
+
+
+    const handleEditCard = (card: CardData) => {
+        setEditingCard(card);
+        setIsEditModalVisible(true);
+    };
+
+    const handleSaveEdit = () => {
+        if (editingCard) {
+            const updatedCards = cards.map(card => (card.id === editingCard.id ? { ...card, input1, input2, input3 } : card));
+            setCards(updatedCards);
+            localStorage.setItem("cards", JSON.stringify(updatedCards));
+            setIsEditModalVisible(false);
+            setEditingCard(null);
+        }
+    };
+
+
 
 
     return (
-        <Content className={'Content'}  style={{height:559,maxHeight:1500}} >
+        <Content className={'Content'}  style={{minHeight:559,height:'100%'}} >
             {selectedMenuKey === "1" && (
                 // Content for "Profile"
                 <div>
@@ -107,14 +141,63 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                                             <UploadContent onImageUploaded={handleAddCard} />
                                         </Col>
                                     </Row>
-                                    <div style={{textAlign: "right"}}>
-                                        <DeleteOutlined onClick={() => handleDeleteCard(card.id)}
-                                                        style={{color: "darkgray", cursor: "pointer"}}/>
+                                    <div style={{paddingLeft:365}}>
+                                        <Space split={<Divider type="vertical" />}>
+                                            <EditOutlined
+                                                onClick={() => handleEditCard(card)}
+                                                style={{ color: "darkgray", cursor: "pointer" }}
+                                            />
+                                            <DeleteOutlined
+                                                onClick={() => showDeleteConfirm(card)}
+                                                style={{ color: "darkgray", cursor: "pointer" }}
+                                            />
+                                        </Space>
                                     </div>
                                 </Card>
                             </Col>
                         ))}
                     </Row>
+                    <Modal
+                        title="Confirm Delete"
+                        open={confirmDeleteVisible}
+                        onOk={handleConfirmDelete}
+                        onCancel={handleDeleteCancel}
+                    >
+                        <p>Are you sure you want to delete this card?</p>
+                    </Modal>
+
+                    <Modal
+                        title="Edit Card"
+                        open={isEditModalVisible}
+                        onOk={handleSaveEdit}
+                        onCancel={() => setIsEditModalVisible(false)}
+                    >
+                        <Input
+                            className="custom-input"
+                            name="input1"
+                            value={input1}
+                            onChange={(e) => handleInputChange("input1", e.target.value)}
+                            placeholder="Name"
+                        />
+                        <Input
+                            className="custom-input"
+                            name="input2"
+                            value={input2}
+                            onChange={(e) => handleInputChange("input2", e.target.value)}
+                            placeholder="Telefon number"
+                        />
+                        <DatePicker
+                            className="custom-input"
+                            name="input3"
+                            value={input3 ? moment(input3) : null}
+                            onChange={(_date: moment.Moment | null, dateString: string | string[]) => {
+                                if (typeof dateString === "string") {
+                                    setInput3(dateString);
+                                }
+                            }}
+                            placeholder="Date of birth"
+                        />
+                    </Modal>
                 </div>
             )}
             {selectedMenuKey === "3" && (
