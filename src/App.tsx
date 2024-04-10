@@ -5,6 +5,7 @@ import SidebarCustom from "./Commponents/layouts/SidebarCustom";
 import HeaderCustom from "./Commponents/layouts/HeaderCustom";
 import ContentCustom from "./Commponents/layouts/ContentCustom";
 
+
 const App: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [selectedMenuKey, setSelectedMenuKey] = useState("1");
@@ -12,7 +13,7 @@ const App: React.FC = () => {
 
 
     return (
-        <Layout>
+        <Layout className={'Layout'}>
             <SidebarCustom collapsed={collapsed} onSelectMenu={setSelectedMenuKey} />
             <Layout>
                 <HeaderCustom setCollapsed={setCollapsed}/>
