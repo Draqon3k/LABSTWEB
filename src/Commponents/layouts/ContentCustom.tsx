@@ -92,6 +92,9 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
 
     const handleEditCard = (card: CardData) => {
         setEditingCard(card);
+        setInput1(card.input1);
+        setInput2(card.input2);
+        setInput3(card.input3);
         setIsEditModalVisible(true);
     };
 
