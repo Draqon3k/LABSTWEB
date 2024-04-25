@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Layout, Card, Input, Button, DatePicker, Row, Col, Divider, Space, Modal } from "antd";
 const { Content } = Layout;
 import ProfileContent from "../../ProfileContent.tsx";
-import UploadContent from "../../UploadContent.tsx";
 import moment from "moment";
 import { DeleteOutlined,EditOutlined  } from "@ant-design/icons";
 
@@ -108,9 +107,6 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
         }
     };
 
-
-
-
     return (
         <Content className={'Content'}  style={{minHeight:559,height:'100%'}} >
             {selectedMenuKey === "1" && (
@@ -141,7 +137,6 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                                             <p>{`Date of birth: ${card.input3}`}</p>
                                         </Col>
                                         <Col xs={8} sm={6} md={6} lg={6} xl={6} className={'CardImage'}>
-                                            <UploadContent onImageUploaded={handleAddCard} />
                                         </Col>
                                     </Row>
                                     <div style={{paddingLeft:365}}>

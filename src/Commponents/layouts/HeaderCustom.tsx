@@ -1,15 +1,16 @@
-
-import { Layout,Button } from "antd";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import React, { useState, Dispatch, SetStateAction } from "react";
+import { Layout, Button } from "antd";
+import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from "@ant-design/icons";
+import { User } from "../../usersData";
 
 interface HeaderCustomProps {
     setCollapsed: Dispatch<SetStateAction<boolean>>;
+    setCurrentUser: (user: User | null) => void; // Definiți funcția setCurrentUser
 }
 
 const { Header } = Layout;
 
-const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed }) => {
+const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed, setCurrentUser }) => {
     const [collapsed, setCollapsedLocal] = useState(false);
 
     const toggleCollapsed = () => {
@@ -17,11 +18,16 @@ const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed }) => {
         setCollapsed(!collapsed);
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem('currentUser');
+        setCurrentUser(null); // Utilizați setCurrentUser pentru a seta utilizatorul curent la null
+    };
+
     return (
-        <Header  style={{background:"white",padding:0}} >
+        <Header style={{ background: "white", padding: 0 }}>
             <Button
                 type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined  />}
+                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                 onClick={toggleCollapsed}
                 style={{
                     fontSize: '16px',
@@ -29,6 +35,20 @@ const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed }) => {
                     height: 64,
                 }}
             />
+            <Button
+                type="text"
+                icon={<LogoutOutlined />}
+                onClick={handleLogout}
+                style={{
+
+                    fontSize: '16px',
+                    float: 'right',
+                    marginRight: '20px',
+                    marginTop:'15px',
+                }}
+            >
+                Logout
+            </Button>
         </Header>
     );
 };
