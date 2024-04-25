@@ -34,3 +34,29 @@ body {
 .CardContent{
   width:500px ;
 }
+
+.Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  background-color: gray;
+}
+
+
+
+.SignUp{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  justify-content: center;
+  background-color: gray;
+}
+
+.padding {
+  margin-bottom: 25px;
+  border-width: 7px;
+  border-radius: 15px;
+}
