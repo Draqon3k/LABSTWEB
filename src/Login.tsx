@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { User } from './usersData';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LoginProps {
     onLogin: (user: User) => void;
-    onSignupClick: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin, onSignupClick }) => {
+const Login: React.FC<LoginProps> = ({ onLogin,  }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loginSuccess, setLoginSuccess] = useState(false);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = () => {
         setLoading(true); // Setăm starea de încărcare pe true înainte de a începe procesul de autentificare
@@ -32,6 +33,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignupClick }) => {
                 onLogin(foundUser);
                 setError('');
                 setLoginSuccess(true);
+                navigate('/profile');
             } else {
                 setError('Invalid username or password');
                 setLoginSuccess(false);
@@ -63,7 +65,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignupClick }) => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {loginSuccess && !loading && <p style={{ color: 'green' }}>Login successful!</p>}
             <p style={{ marginTop: '10px', textAlign: 'center' }}>
-                Don't have an account? <a href="#" onClick={onSignupClick}>Sign up here</a>
+                Don't have an account? <Link to="/signup">Sign up here</Link>
             </p>
         </div>
     );

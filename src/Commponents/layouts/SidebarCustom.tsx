@@ -2,6 +2,7 @@
 import React from "react";
 import { Menu, Layout } from "antd";
 import { UserOutlined, VideoCameraOutlined, UploadOutlined } from "@ant-design/icons";
+import { Link, useNavigate } from "react-router-dom";
 
 const { Sider } = Layout;
 
@@ -11,8 +12,10 @@ interface SidebarProps {
 }
 
 const SidebarCustom = ({ collapsed, onSelectMenu }: SidebarProps) => {
+    const navigate = useNavigate();
     const handleMenuSelect = ({ key }: { key: React.Key }) => {
         onSelectMenu(key.toString());
+        navigate(`/${key}`);
     };
 
     return (
@@ -24,9 +27,9 @@ const SidebarCustom = ({ collapsed, onSelectMenu }: SidebarProps) => {
                 defaultSelectedKeys={['1']}
                 onSelect={handleMenuSelect}
             >
-                <Menu.Item key="1" icon={<UserOutlined />} >Profile</Menu.Item>
-                <Menu.Item key="2" icon={<VideoCameraOutlined />} >Content</Menu.Item>
-                <Menu.Item key="3" icon={<UploadOutlined />} >UpData</Menu.Item>
+                <Menu.Item key="profile" icon={<UserOutlined />} ><Link to="/profile">Profile</Link></Menu.Item>
+                <Menu.Item key="content" icon={<VideoCameraOutlined />} ><Link to="/content">Content</Link></Menu.Item>
+                <Menu.Item key="updata" icon={<UploadOutlined />} ><Link to="/updata">UpData</Link></Menu.Item>
             </Menu>
         </Sider>
     );
