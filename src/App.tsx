@@ -61,12 +61,12 @@ const App: React.FC = () => {
                         <Layout>
                             <HeaderCustom setCollapsed={setCollapsed} setCurrentUser={setCurrentUser} />
                             <Content>
+                                <Routes>
                                     <Route path="/:page" element={<ContentCustom selectedMenuKey={selectedMenuKey} />} />
+                                </Routes>
                             </Content>
                         </Layout>
                     </Layout>
-
-
                 ) : (
                     <Routes>
                         <Route path="/" element={<Login onLogin={handleLogin} />} />
