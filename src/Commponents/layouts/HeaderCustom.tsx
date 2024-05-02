@@ -2,6 +2,8 @@ import React, { useState, Dispatch, SetStateAction } from "react";
 import { Layout, Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from "@ant-design/icons";
 import { User } from "../../usersData";
+import { Link, useNavigate } from 'react-router-dom';
+
 
 interface HeaderCustomProps {
     setCollapsed: Dispatch<SetStateAction<boolean>>;
@@ -21,7 +23,10 @@ const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed, setCurrentUse
     const handleLogout = () => {
         localStorage.removeItem('currentUser');
         setCurrentUser(null); // Utilizați setCurrentUser pentru a seta utilizatorul curent la null
+        navigate('/login');
     };
+
+    const navigate = useNavigate();
 
     return (
         <Header style={{ background: "white", padding: 0 }}>
@@ -48,7 +53,9 @@ const HeaderCustom: React.FC<HeaderCustomProps> = ({ setCollapsed, setCurrentUse
                 }}
             >
                 Logout
+
             </Button>
+            <Link to="/login" onClick={handleLogout}></Link>
         </Header>
     );
 };

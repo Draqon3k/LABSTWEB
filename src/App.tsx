@@ -3,15 +3,15 @@ import { Layout, notification } from 'antd'; // Importăm componenta notificatio
 import SidebarCustom from "./Commponents/layouts/SidebarCustom";
 import HeaderCustom from "./Commponents/layouts/HeaderCustom";
 import ContentCustom from "./Commponents/layouts/ContentCustom";
+import NotFound from "./Commponents/NotFound.tsx";
 import usersData, { User } from './usersData';
 import Login from './Login';
 import Signup from './Signup';
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 const { Content } = Layout;
 
 const App: React.FC = () => {
-    const [showLogin, setShowLogin] = useState(true);
-    const [showSignup, setShowSignup] = useState(false);
     const [collapsed, setCollapsed] = useState(false);
     const [selectedMenuKey, setSelectedMenuKey] = useState("1");
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -24,13 +24,6 @@ const App: React.FC = () => {
 
     const handleSignup = (user: User) => {
         setCurrentUser(user);
-        setShowLogin(true);
-        setShowSignup(false);
-    };
-
-    const showSignupForm = () => {
-        setShowLogin(false);
-        setShowSignup(true);
     };
 
     useEffect(() => {
@@ -60,31 +53,30 @@ const App: React.FC = () => {
     }, [showLoginSuccessNotification]);
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
-            {currentUser ? (
-                <Layout>
-                    <SidebarCustom collapsed={collapsed} onSelectMenu={setSelectedMenuKey}/>
+        <Router>
+            <Layout style={{ minHeight: '100vh' }}>
+                {currentUser ? (
                     <Layout>
-                        <HeaderCustom setCollapsed={setCollapsed} setCurrentUser={setCurrentUser} />
-                        <Content>
-                            <ContentCustom selectedMenuKey={selectedMenuKey}/>
-                        </Content>
+                        <SidebarCustom collapsed={collapsed} onSelectMenu={setSelectedMenuKey}/>
+                        <Layout>
+                            <HeaderCustom setCollapsed={setCollapsed} setCurrentUser={setCurrentUser} />
+                            <Content>
+                                    <Route path="/:page" element={<ContentCustom selectedMenuKey={selectedMenuKey} />} />
+                            </Content>
+                        </Layout>
                     </Layout>
-                </Layout>
-            ) : (
-                <>
-                    {showLogin && (
-                        <Login
-                            onLogin={handleLogin}
-                            onSignupClick={showSignupForm}
-                        />
-                    )}
-                    {showSignup && (
-                        <Signup onSignup={handleSignup} />
-                    )}
-                </>
-            )}
-        </Layout>
+
+
+                ) : (
+                    <Routes>
+                        <Route path="/" element={<Login onLogin={handleLogin} />} />
+                        <Route path="/login" element={<Login onLogin={handleLogin} />} />
+                        <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
+                        <Route path="*" element={<NotFound />} /> {/* Add this line */}
+                    </Routes>
+                )}
+            </Layout>
+        </Router>
     );
 };
 

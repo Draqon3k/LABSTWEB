@@ -4,6 +4,7 @@ const { Content } = Layout;
 import ProfileContent from "../../ProfileContent.tsx";
 import moment from "moment";
 import { DeleteOutlined,EditOutlined  } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 
 interface ContentCustomProps {
     selectedMenuKey: string;
@@ -16,7 +17,8 @@ interface CardData {
     input3: string;
 }
 
-const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
+const ContentCustom: React.FC<ContentCustomProps> = ({}) => {
+    const { page } = useParams();
     const [input1, setInput1] = useState<string>("");
     const [input2, setInput2] = useState<string>("");
     const [input3, setInput3] = useState<string>("");
@@ -109,7 +111,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
 
     return (
         <Content className={'Content'}  style={{minHeight:559,height:'100%'}} >
-            {selectedMenuKey === "1" && (
+            {page === "profile"  && (
                 // Content for "Profile"
                 <div>
                     <ProfileContent data={{
@@ -123,7 +125,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                     }} />
                 </div>
             )}
-            {selectedMenuKey === "2" && (
+            {page === "content" && (
                 <div>
                     <h2>Cards details</h2>
                     <Row gutter={[40, 40]}>
@@ -198,7 +200,7 @@ const ContentCustom: React.FC<ContentCustomProps> = ({ selectedMenuKey }) => {
                     </Modal>
                 </div>
             )}
-            {selectedMenuKey === "3" && (
+            {page === "updata" && (
                 // Content for "Data"
                 <div>
                     <Row>
